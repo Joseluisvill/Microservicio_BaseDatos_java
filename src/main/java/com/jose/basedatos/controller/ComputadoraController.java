@@ -6,7 +6,7 @@
 package com.jose.basedatos.controller;
 
 import com.jose.basedatos.ejb.ComputadoraFacade;
-import com.jose.basedatos.entity.Computadora;
+import com.jose.computadoraclient.entity.Computadora;
 import java.io.Serializable;
 import java.util.List;
 import javax.inject.Named;

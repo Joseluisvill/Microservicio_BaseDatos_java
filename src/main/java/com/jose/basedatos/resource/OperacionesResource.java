@@ -6,7 +6,7 @@
 package com.jose.basedatos.resource;
 
 import com.jose.basedatos.ejb.ComputadoraFacade;
-import com.jose.basedatos.entity.Computadora;
+import com.jose.computadoraclient.entity.Computadora;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -17,6 +17,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -82,7 +83,16 @@ public class OperacionesResource {
         //lista.add(new Computadora("Az25445878","Dell","Azuero 2020","Intel",225.5,8));
         List<Computadora> lista= computadoraFacade.findAll();
         return lista;
-    }   
+    }
+    /*@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/computadoraunica")
+    public List<Computadora>buscarID(@QueryParam(value="id")String id)
+    {
+        List<Computadora> lista;
+        lista= computadoraFacade.busquedaSerial(id);
+        return lista;
+    }*/
     
     //estos post lo cree la vez pasada de asignacion de ejemplo
     @POST
@@ -114,12 +124,10 @@ public class OperacionesResource {
     //para buscar desde serial
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/buscarcomputadora")
-    public Computadora buscarcomputadora(Computadora computador)
-    {
-        String a= computador.getSerial();
-        
-       Computadora cp=computadoraFacade.find(computador.getSerial());
+    @Path("/buscarcomputadora/{id}")
+    public Computadora buscarcomputadora(@PathParam(value="id") String id)
+    {   
+       Computadora cp=computadoraFacade.find(id);
        return cp;
     }
     

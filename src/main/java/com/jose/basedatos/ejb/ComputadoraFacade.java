@@ -6,7 +6,7 @@
 package com.jose.basedatos.ejb;
 
 import com.jose.basedatos.ejb.AbstractFacade;
-import com.jose.basedatos.entity.Computadora;
+import com.jose.computadoraclient.entity.Computadora;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -36,10 +36,18 @@ public class ComputadoraFacade extends AbstractFacade<Computadora>{
     {
         super(Computadora.class);
     }
-    public List<Computador> busquedaSerial(String cadena)
+    public List<Computadora> busquedaSerial(String cadena)
     {
-        Query p= em.createNativeQuery("SELECT * FROM computadora WHERE SERIAL="+cadena+"", Computadora.class);
-        List<Computador> ls=p.getResultList();
+         List<Computadora> ls;
+        try
+        {
+            Query p= em.createNativeQuery("SELECT * FROM computadora WHERE SERIAL= ?1")
+                    .setParameter(1, cadena);
+            ls=p.getResultList();
+        }catch(Exception e)
+        {
+            throw e;
+        }
         return ls;
     }
 
